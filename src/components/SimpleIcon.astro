@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon";
+//  interface
+import { type IData } from '../interfaces/IData.interface'
+
+interface Props {
+  dataIcon: Partial<IData>
+}
+
+const { dataIcon } = Astro.props
+---
+<a
+  class="group-hover:scale-110 transition-transform"
+  href=""
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  { dataIcon.title }
+  {
+    dataIcon.img
+      ? <img class="object-cover aspect-square rounded-[50%]" src={ dataIcon.img } alt="my photo" />
+      : <Icon class="max-w-[5rem]" name={ dataIcon.icon } />
+  }
+  { dataIcon.description && <p class="trucante">{ dataIcon.description }</p> }
+</a> 

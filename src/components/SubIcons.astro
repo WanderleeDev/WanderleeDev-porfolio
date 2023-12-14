@@ -1,0 +1,17 @@
+---
+import { Icon } from "astro-icon";
+
+interface Props {
+	listIcons: string[];
+}
+
+const { listIcons } = Astro.props
+---
+
+<div class="grid grid-cols-2 grid-rows-2 gap-2">
+  {listIcons.map(icon =>  
+      <a class="bg-blue-400/50 p-2 group"> 
+        <Icon class="max-w-[5rem] w-full h-full hover:scale-110 transition-transform" name={icon}/> 
+      </a>
+  )}
+</div>

@@ -1,0 +1,93 @@
+---
+//	components
+import SubIcons from "./SubIcons.astro";
+import SimpleIcon from "./SimpleIcon.astro";
+//	data
+import dataNav from "../data/dataMenu.ts";
+import getWeather from "../helpers/getWeather.ts";
+
+const data = await getWeather('lima')
+console.log(data);
+
+
+---
+<pre>
+	<code>
+
+	</code>
+</pre>
+<ul
+  class="h-full grid-container bg-slate-500/10 text-white font-medium overflow-y-auto"
+>
+  {
+    dataNav.map((data) => (
+      <li class=" bg-white/10 backdrop-blur-sm grid  overflow-hidden group">
+        {!data.subIcons ? <SimpleIcon dataIcon={ data } /> : <SubIcons listIcons={ data.subIcons } />}
+      </li>
+    ))
+  }
+<button class="btn" type="button">'click</button>
+</ul>
+
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "zone1 zone2 zone2"
+      "zone3 zone4 zone4"
+      "zone5 zone5 zone6"
+      "zone7 zone8 zone9"
+      "zone10 zone11 zone12";
+    gap: 0.5rem;
+
+    & li:nth-child(1) {
+      grid-area: zone1;
+    }
+    & li:nth-child(2) {
+      grid-area: zone2;
+    }
+    & li:nth-child(3) {
+      grid-area: zone3;
+    }
+    & li:nth-child(2) {
+      grid-area: zone2;
+    }
+    & li:nth-child(4) {
+      grid-area: zone4;
+    }
+    & li:nth-child(5) {
+      grid-area: zone5;
+    }
+    & li:nth-child(6) {
+      grid-area: zone6;
+    }
+    & li:nth-child(7) {
+      grid-area: zone7;
+    }
+    & li:nth-child(8) {
+      grid-area: zone8;
+    }
+    & li:nth-child(9) {
+      grid-area: zone9;
+    }
+    & li:nth-child(10) {
+      grid-area: zone10;
+    }
+    & li:nth-child(11) {
+      grid-area: zone11;
+    }
+    & li:nth-child(12) {
+      grid-area: zone12;
+    }
+  }
+</style>
+
+<script>import getWeather from "../helpers/getWeather"
+
+	const btn = document.querySelector('.btn')?.addEventListener('click', async() => {
+		return console.log(await getWeather('lima'))
+	})
+
+
+</script>
