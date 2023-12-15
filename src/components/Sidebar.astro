@@ -3,35 +3,54 @@ import { Icon } from 'astro-icon'
 import CelPhoneKeyboard from './CelPhoneKeyboard.astro'
 ---
 
-<nav class="bg-black h-10 relative lg:hidden">
-  <ul class="grid grid-cols-3 text-white place-content-center h-full text-center">
+<nav
+  transition:animate="none" 
+  class="bg-black h-10 relative lg:hidden"
+  >
+  <ul id="sidebar" class="grid grid-cols-3 text-white place-content-center h-full text-center">
     <li>
-      <button 
+      <button
+        id="btn-back" 
         class="w-8 text-slate-300" 
         type="button" 
         aria-label="regresar a la sección anterior"
       >
-        <Icon name="ph:arrow-left-thin" />
+        <Icon class="pointer-events-none" name="ph:arrow-left-thin" />
       </button>
     </li>
     <li>
-      <button 
+      <button
+        id="btn-home" 
         class="w-8 text-slate-300" 
         type="button" 
         aria-label="regresar a home"
       >
-        <Icon name="ri:windows-fill" />
+        <Icon class="pointer-events-none" name="ri:windows-fill" />
       </button>
     </li>
     <li>
-      <button 
+      <button
+        id="btn-searchToggle" 
         class="w-8 text-slate-300" 
         type="button" 
         aria-label="buscar archivo"
       >
-        <Icon name="la:search" />
+        <Icon class="pointer-events-none" name="la:search" />
       </button>
     </li>
   </ul>
   <CelPhoneKeyboard />
 </nav>
+
+<script>
+  const sidebar = document.querySelector('#sidebar') as HTMLElement
+  const sidebarHandler = (e: MouseEvent) => {
+    if (!(e.target instanceof HTMLButtonElement)) return
+
+    if (e.target.id === 'btn-back') window.history.back()
+    if (e.target.id === 'btn-home') window.location.href='/'
+    if (e.target.id === 'btn-searchToggle') console.log('x implementar');
+  }
+
+  sidebar?.addEventListener('click', sidebarHandler)
+</script>

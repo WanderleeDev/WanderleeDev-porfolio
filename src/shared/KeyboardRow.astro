@@ -1,17 +1,15 @@
 ---
 interface Props {
   keyboardLetters: string[]
-  customStyles: string[]
+  // customStyles: string[]
 } 
 
 const { keyboardLetters } = Astro.props 
-console.log(Astro.props)
 
 ---
 
 <div
   class="grid gap-2 grid-cols-10 px-4" 
-  class:list={customStyles}
   data-board="front"
 >
 {keyboardLetters.map(letter => (

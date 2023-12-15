@@ -1,19 +1,22 @@
 ---
 import KeyboardRow from '../shared/KeyboardRow.astro'
+import { keyboardData } from '../data/keyboardData.ts'
 
-const keyboardLetters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '🡱', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⌫']
-const keyboardSpecialCaracter = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '@', '#', '$', '_', '&', '-', '+', '(', ')', '/', '*', '"', "'",':', ';', '!', '¡', '¿', '?']
-const keyboardControls = ['&123', '.com', 'space', '.', '🡲']
+const { controls, letters, specialCharacter } = keyboardData
 
 ---
-<aside class="bg-[#1E1E1E] absolute top-0 -translate-y-full grid w-full">
+<aside class="bg-[#1E1E1E] absolute top-0 -translate-y-full grid w-full select-none">
 
-  <form class="w-full grid grid-cols-[auto_1fr] gap-2 px-4 py-2" autocomplete="off">
+  <form
+    id="searcbarWrapper" 
+    class="w-full grid grid-cols-[auto_1fr] gap-2 px-4 py-2" 
+    autocomplete="off"
+  >
     <button
       id="btn-reload"
       class="text-[#9A9A9A] w-8 h-8 rounded-[50%] border-2 border-current hover:text-white"
       aria-label="reload" 
-      type="button"
+      type="submit"
     >
       &#10227;
     </button>
@@ -26,45 +29,19 @@ const keyboardControls = ['&123', '.com', 'space', '.', '🡲']
   </form>
 
   <div id="keyboard" class="text-white grid gap-2">
-    <KeyboardRow keyboardLetters={keyboardLetters.slice(0, 10)}/>
-    <KeyboardRow keyboardLetters={keyboardLetters.slice(10, 19)}  customStyles={['gric-cols-9']}/>
-
-
-<div class="grid gap-2 grid-cols-9 px-8">
-  {keyboardLetters.slice(10, 19).map(letter => (
+    <KeyboardRow keyboardLetters={ letters.slice(0, 10) }/>
+    <KeyboardRow keyboardLetters={ letters.slice(10, 19) } />
+    <KeyboardRow keyboardLetters={ letters.slice(19, 28) } />
+  <div class="grid gap-2 grid-cols-[auto_auto_1fr_auto_auto] px-4 pb-2 ">
+    
+  {controls.map(control => (
     <button 
-      data-caracter={letter} 
+      data-caracter={control} 
       class="bg-[#464646] hover:bg-[#EEEEEE] hover:text-[#1E1E1E] py-4 px-1 min-w-[2rem] text-xs sm:text-lg"
-      aria-label=`letter ${letter}`
+      aria-label=`letter ${control}`
       type="button"
     >
-      {letter}
-    </button>)
-  )}
-</div>
-
-<div class="grid gap-2 grid-cols-9 px-4">
-  {keyboardLetters.slice(19, 28).map(letter => (
-    <button 
-      data-caracter={letter} 
-      class="bg-[#464646] hover:bg-[#EEEEEE] hover:text-[#1E1E1E] py-4 px-1 min-w-[2rem] text-xs sm:text-lg"
-      aria-label=`letter ${letter}`
-      type="button"
-    >
-      {letter}
-    </button>)
-  )}
-</div>
-
-<div class="grid gap-2 grid-cols-[auto_auto_1fr_auto_auto] px-4 pb-2 ">
-  {keyboardControls.map(letter => (
-    <button 
-      data-caracter={letter} 
-      class="bg-[#464646] hover:bg-[#EEEEEE] hover:text-[#1E1E1E] py-4 px-1 min-w-[2rem] text-xs sm:text-lg"
-      aria-label=`letter ${letter}`
-      type="button"
-    >
-      {letter}
+      {control}
     </button>)
   )}
 </div>
@@ -88,21 +65,31 @@ const keyboardControls = ['&123', '.com', 'space', '.', '🡲']
 </aside>
 
 <script>
+  const searchBarWrapper = document.querySelector('#searcbarWrapper') as HTMLFormElement
   const searchBar = document.querySelector('#searchBar') as HTMLInputElement
   const keyBoard = document.querySelector('#keyboard') as HTMLDivElement
 
-  const keyboardHandler = (e: Event): void => {
+  const validityUrl = (link: string): boolean => URL.canParse(link)
+  const searchBarHandler = (value: string) => {
+    if (!value || value === '') return
+    if (validityUrl(value)) window.location.href = value
+  }
+
+  const keyboardHandler = (e: MouseEvent): void => {
     if (e.target instanceof HTMLButtonElement && e.target.dataset.caracter) {
       const currentValue = e.target.getAttribute('data-caracter')
 
       if (currentValue === null) return
+
       if (currentValue === 'space') {
         searchBar.value += ' '
       } else if (currentValue === '⌫') {
         searchBar.value = searchBar.value.slice(0, -1)
       } else if (currentValue === '🡱') {
         searchBar.value += 'no'
+        searchBar.classList.add('')
       } else if (currentValue === '🡲') {
+        searchBar.type = "submit"
         searchBar.value += 'si'
       } else if (currentValue === '&123') {
         searchBar.value += 'change'
@@ -112,5 +99,9 @@ const keyboardControls = ['&123', '.com', 'space', '.', '🡲']
     }
   }
 
-  keyBoard?.addEventListener('click', (e: MouseEvent): void => keyboardHandler(e))
+  keyBoard?.addEventListener('click', keyboardHandler)
+  searchBarWrapper?.addEventListener('submit', (e: Event) => {
+    e.preventDefault()
+    searchBarHandler(searchBar.value.trim())
+  })
 </script>
