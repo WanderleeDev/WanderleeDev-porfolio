@@ -9,24 +9,17 @@ import getWeather from "../helpers/getWeather.ts";
 const data = await getWeather('lima')
 console.log(data);
 
-
 ---
-<pre>
-	<code>
 
-	</code>
-</pre>
-<ul
-  class="h-full grid-container bg-slate-500/10 text-white font-medium overflow-y-auto"
->
+<ul class="h-full grid-container bg-slate-500/10 text-white font-medium overflow-y-auto">
   {
     dataNav.map((data) => (
       <li class=" bg-white/10 backdrop-blur-sm grid  overflow-hidden group">
-        {!data.subIcons ? <SimpleIcon dataIcon={ data } /> : <SubIcons listIcons={ data.subIcons } />}
+        {!data.subIcons ? <SimpleIcon dataIcon={ data } /> :
+          <SubIcons listIcons={ data.subIcons } />}
       </li>
     ))
   }
-<button class="btn" type="button">'click</button>
 </ul>
 
 <style>
@@ -82,12 +75,3 @@ console.log(data);
     }
   }
 </style>
-
-<script>import getWeather from "../helpers/getWeather"
-
-	const btn = document.querySelector('.btn')?.addEventListener('click', async() => {
-		return console.log(await getWeather('lima'))
-	})
-
-
-</script>

@@ -1,8 +1,9 @@
 ---
 import { Icon } from 'astro-icon'
+import CelPhoneKeyboard from './CelPhoneKeyboard.astro'
 ---
 
-<nav class="bg-black h-10">
+<nav class="bg-black h-10 relative lg:hidden">
   <ul class="grid grid-cols-3 text-white place-content-center h-full text-center">
     <li>
       <button 
@@ -32,4 +33,5 @@ import { Icon } from 'astro-icon'
       </button>
     </li>
   </ul>
+  <CelPhoneKeyboard />
 </nav>

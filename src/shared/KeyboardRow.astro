@@ -1,0 +1,27 @@
+---
+interface Props {
+  keyboardLetters: string[]
+  customStyles: string[]
+} 
+
+const { keyboardLetters } = Astro.props 
+console.log(Astro.props)
+
+---
+
+<div
+  class="grid gap-2 grid-cols-10 px-4" 
+  class:list={customStyles}
+  data-board="front"
+>
+{keyboardLetters.map(letter => (
+  <button 
+    data-caracter={letter} 
+    class="bg-[#464646] hover:bg-[#EEEEEE] hover:text-[#1E1E1E] py-4 px-1 min-w-[2rem] text-xs sm:text-lg"
+    aria-label=`letter ${letter}`
+    type="button"
+  >
+    {letter}
+  </button>)
+)}
+</div>

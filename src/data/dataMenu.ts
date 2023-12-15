@@ -7,7 +7,7 @@ const dataNav: Array<Partial<IData>> = [
   },
   {
     title: 'Wanderlee Max',
-    // icon: 'fxemoji:sunbehindcloud',
+    icon: 'fxemoji:sunbehindcloud',
     description: 'Programador Frontend autodidacta familiarizado con las sigientes tecnologias: ',
     tec: [
       'HTML',
