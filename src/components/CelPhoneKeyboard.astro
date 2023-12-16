@@ -65,6 +65,8 @@ const { controls, letters, specialCharacter } = keyboardData
 </aside>
 
 <script>
+  import { match, P } from 'ts-pattern'
+
   const searchBarWrapper = document.querySelector('#searcbarWrapper') as HTMLFormElement
   const searchBar = document.querySelector('#searchBar') as HTMLInputElement
   const keyBoard = document.querySelector('#keyboard') as HTMLDivElement
@@ -81,21 +83,15 @@ const { controls, letters, specialCharacter } = keyboardData
 
       if (currentValue === null) return
 
-      if (currentValue === 'space') {
-        searchBar.value += ' '
-      } else if (currentValue === '⌫') {
-        searchBar.value = searchBar.value.slice(0, -1)
-      } else if (currentValue === '🡱') {
-        searchBar.value += 'no'
-        searchBar.classList.add('')
-      } else if (currentValue === '🡲') {
-        searchBar.type = "submit"
-        searchBar.value += 'si'
-      } else if (currentValue === '&123') {
-        searchBar.value += 'change'
-      } else {
-        searchBar.value += currentValue;
-      }
+      // Pattern Matching 
+      match(currentValue)
+        .with('space', () => searchBar.value += ' ')
+        .with('⌫', () => searchBar.value = searchBar.value.slice(0, -1))
+        .with('🡱', () => searchBar.value += 'si')
+        .with('🡲', () => searchBar.value += 'search')
+        .with('&123', () => searchBar.value += 'change')
+        .with(P.string, () => searchBar.value += currentValue)
+        .exhaustive();
     }
   }
 

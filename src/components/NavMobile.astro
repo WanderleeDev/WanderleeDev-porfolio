@@ -2,6 +2,7 @@
 //	components
 import SubIcons from "./SubIcons.astro";
 import SimpleIcon from "./SimpleIcon.astro";
+import WeatherWiget from "./WeatherWiget.astro";
 //	data
 import dataNav from "../data/dataMenu.ts";
 import getWeather from "../helpers/getWeather.ts";
@@ -20,6 +21,8 @@ const data = await getWeather('lima')
     ))
   }
 </ul>
+
+<WeatherWiget/>
 
 <style>
   .grid-container {
