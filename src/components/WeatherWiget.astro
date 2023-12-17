@@ -1,18 +1,34 @@
 ---
+  import { Icon } from 'astro-icon'
 ---
 
-<article>
+<article id="weather-wrapper" class="flex gap-2 p-2">
   <h2>
-    
+    Wheater recently
   </h2>
-  <div>
-    
+  <div class="w-8">
+      <Icon class="text-white" name="gis:weather-map" />
   </div>
 </article>
 
 <script>
+  import svg from '@assets/images/planet.svg'
   import { getGeolocation } from "src/helpers/getGeolocation";
-  const data = await getGeolocation()
-  console.log(data)
+  import getWeather from "src/helpers/getWeather";
+  const parentContainer = document.querySelector('#weather-wrapper') as HTMLElement
+  const location = await getGeolocation()
 
+  if (!location) throw new Error('es valor de la ,localización es nulo')
+
+  const currentWeather = await getWeather(location) 
+
+  const cardWeather = `
+    <figure class="text-white bg-white/30 flex gap-2">
+      ${svg}
+      <figcaption>
+        <strong>${currentWeather?.name} - ${currentWeather?.weather[0].main}</strong>
+        <p>${currentWeather?.weather[0].description}</p>
+      </figcaption>
+    </figure>`
+  parentContainer.insertAdjacentHTML("beforeend", cardWeather)
 </script>

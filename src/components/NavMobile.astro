@@ -5,12 +5,11 @@ import SimpleIcon from "./SimpleIcon.astro";
 import WeatherWiget from "./WeatherWiget.astro";
 //	data
 import dataNav from "../data/dataMenu.ts";
-import getWeather from "../helpers/getWeather.ts";
 
-const data = await getWeather('lima')
 
 ---
 
+<WeatherWiget/>
 <ul class="h-full grid-container bg-slate-500/10 text-white font-medium overflow-y-auto">
   {
     dataNav.map((data) => (
@@ -21,8 +20,6 @@ const data = await getWeather('lima')
     ))
   }
 </ul>
-
-<WeatherWiget/>
 
 <style>
   .grid-container {

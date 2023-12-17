@@ -1,12 +1,12 @@
-import { error } from 'node_modules/astro/dist/core/logger/core'
 import { match } from 'ts-pattern'
+import { type IPositionLocation } from 'src/interfaces/IPositionLocation.interface'
 
 //  successful location
-const getPosition = (position: GeolocationPosition): number[] => {
-  return [
-    position.coords.latitude,
-    position.coords.longitude
-  ]
+const getPosition = (position: GeolocationPosition): IPositionLocation => {
+  return {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude
+  }
 }
 
 //  error location
@@ -17,14 +17,11 @@ const errorPosition = (error: GeolocationPositionError): void => {
     .with(1, () => { message = error.message })
     .with(2, () => { message = error.message })
     .with(3, () => { message = error.message })
-    .otherwise(() => {
-      message = 'unknown error'
-    })
 
   throw new Error(message)
 }
 
-export async function getGeolocation (): Promise<number[] | null> {
+export async function getGeolocation (): Promise<IPositionLocation | null> {
   return await new Promise((resolve, reject) => {
     match('geolocation' in navigator)
       .with(true, () => {
